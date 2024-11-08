@@ -203,211 +203,225 @@ const QuestionForm = ({ isPreviewMode }) => {
 
   // Else render editable form
   return (
-    <div className="container mt-4" style={{ background: '#FDFEFF' }}>
-      <form onSubmit={handleSubmit}>
-        {/* Form Title */}
-        <div className="mb-4">
-          <label htmlFor="formTitle" className="form-label">
-            Form Title
-          </label>
-          <input
-            type="text"
-            id="formTitle"
-            className="form-control"
-            value={formTitle}
-            onChange={handleFormTitleChange}
-            placeholder="Enter form title"
-            required
-          />
-        </div>
+ 
+<div className="container mt-4" style={{ background: '#FDFEFF' }}>
+  <form onSubmit={handleSubmit}>
+    {/* Form Title */}
+    <div className="mb-4">
+      <label htmlFor="formTitle" className="form-label">
+        Form Title
+      </label>
+      <input
+        type="text"
+        id="formTitle"
+        className="form-control"
+        value={formTitle}
+        onChange={handleFormTitleChange}
+        placeholder="Enter form title"
+        required
+      />
+    </div>
 
-        {/* Row for Question Form and Add Section Button */}
-        <div className="row">
-          {/* Question Form on the Left */}
-          <div className="col-md-8">
-            {questions.map((item) => (
-              <div key={item.questionId} className="mb-4">
-                <div className="p-3 bg-white border rounded shadow-sm position-relative">
-                  <div className="d-flex justify-content-between align-items-center mb-3">
-                    <div className="w-100">
-                      <label className="form-label mb-4">Question {item.questionId}</label>
-                      {item.inputType === 'MCQ' && (
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={item.questionText}
-                          onChange={(e) => handleQuestionTextChange(item.questionId, e.target.value)}
-                          placeholder="Enter your question"
-                          required
-                        />
-                      )}
-                    </div>
+    {/* Row for Question Form and Add Section Button */}
+    <div className="row">
+      {/* Question Form on the Left */}
+      <div className="col-md-8">
+        {questions.map((item) => (
+          <div key={item.questionId} className="mb-4">
+            <div className="p-3 bg-white border rounded shadow-sm position-relative">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <div className="w-100">
+                  <label className="form-label mb-4">Question {item.questionId}</label>
 
-                    {/* Dropdown Box on Top Right Corner */}
-                    <div className="position-absolute top-0 end-0 p-2">
-                      <select
-                        className="form-select"
-                        aria-label="Input Type"
-                        value={item.inputType}
-                        onChange={(e) => handleInputTypeChange(item.questionId, e.target.value)}
-                      >
-                        <option value="MCQ">MCQ</option>
-                        <option value="Textarea">Textarea</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  {/* Render MCQ Options */}
-                  {item.inputType === 'MCQ' && item.options.map((option, idx) => (
-                    <div key={option.optionId} className="input-group mb-2">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={option.optionText}
-                        onChange={(e) =>
-                          setQuestions((prev) =>
-                            prev.map((i) =>
-                              i.questionId === item.questionId
-                                ? {
-                                    ...i,
-                                    options: i.options.map((opt) =>
-                                      opt.optionId === option.optionId
-                                        ? { ...opt, optionText: e.target.value }
-                                        : opt
-                                    ),
-                                  }
-                                : i
-                            )
-                          )
-                        }
-                        placeholder={`Option ${idx + 1}`}
-                        required
-                      />
-                      <button
-                          type="button"
-                          className="btn btn-sm btn-danger ms-2"
-                          onClick={() => removeOption(item.questionId, option.optionId)}
-                        >
-                          <i className="bi bi-x-circle-fill"></i>
-                        </button>
-                    </div>
-                  ))}
-
-                  {/* Add Option Button */}
-                  {item.inputType === 'MCQ' && item.options.length < 8 && (
-                    <div className="d-flex justify-content-end mt-2">
-                      <button
-                        type="button"
-                        className="btn btn-light border border-secondary text-dark mb-2"
-                        onClick={() => addOption(item.questionId)}
-                      >
-                        <i className="bi bi-plus-circle me-2"></i> Add Option
-                      </button>
-                    </div>
+                  {/* Render Input for Question Text */}
+                  {item.inputType === 'MCQ' && (
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={item.questionText}
+                      onChange={(e) => handleQuestionTextChange(item.questionId, e.target.value)}
+                      placeholder="Enter your question"
+                      required
+                    />
                   )}
 
-                  {/* Render Sections */}
-                  {item.sections.map((section) => (
-                    <div key={section.sectionId} className="flex-grow-1 p-3 bg-white border rounded shadow-sm mt-4">
-                      <div className="d-flex justify-content-between">
-                        <div className="w-100">
-                          <h5>{section.sectionTitle}</h5>
-                          {section.inputFields.map((field) => (
-                            <div key={field.fieldId} className="mb-3">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder={`Field ${field.fieldId}`}
-                                value={field.fieldText}
-                                onChange={(e) =>
-                                  setQuestions((prev) =>
-                                    prev.map((q) =>
-                                      q.questionId === item.questionId
-                                        ? {
-                                            ...q,
-                                            sections: q.sections.map((sec) =>
-                                              sec.sectionId === section.sectionId
-                                                ? {
-                                                    ...sec,
-                                                    inputFields: sec.inputFields.map((fld) =>
-                                                      fld.fieldId === field.fieldId
-                                                        ? { ...fld, fieldText: e.target.value }
-                                                        : fld
-                                                    ),
-                                                  }
-                                                : sec
-                                            ),
-                                          }
-                                        : q
-                                    )
-                                  )
-                                }
-                                required
-                              />
-                              
-                              
-                            </div>
-                          ))}
-                        </div>
+                  {/* Render Textarea for Textarea Input Type */}
+                  {item.inputType === 'Textarea' && (
+                    <textarea
+                      className="form-control"
+                      value={item.questionText} // Use questionText for Textarea
+                      onChange={(e) => handleQuestionTextChange(item.questionId, e.target.value)}
+                      placeholder="Enter your question"
+                      rows="4"
+                      required
+                    />
+                  )}
+                </div>
 
-                        {/* Add Input Field Button */}
-                        <div className="d-flex flex-column align-items-center ms-3" style={{ width: '40px' }}>
-                          <button
-                            type="button"
-                            className="btn btn-light mb-2"
-                            onClick={() => addInputFieldInSection(section.sectionId, item.questionId)}
-                            title="Add Input Field"
-                          >
-                            <i className="bi bi-plus-circle-fill"></i>
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn-light mb-2"
-                            onClick={() => deleteSection(section.sectionId, item.questionId)}
-                            title="Delete Section"
-                          >
-                            <i className="bi bi-trash-fill"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-
-                  {/* Add Section Button */}
-                  <div className="d-flex justify-content-end mt-4">
-                    <button
-                      type="button"
-                      className="btn btn-light border border-secondary text-dark mb-2"
-                      onClick={() => addSection(item.questionId)}
-                    >
-                      Add Section
-                    </button>
-                  </div>
+                {/* Dropdown Box on Top Right Corner */}
+                <div className="position-absolute top-0 end-0 p-2">
+                  <select
+                    className="form-select"
+                    aria-label="Input Type"
+                    value={item.inputType}
+                    onChange={(e) => handleInputTypeChange(item.questionId, e.target.value)}
+                  >
+                    <option value="MCQ">MCQ</option>
+                    <option value="Textarea">Textarea</option>
+                  </select>
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* Add Question Button */}
-          <div className="col-md-4 d-flex flex-column align-items-center justify-content-center">
-            <button
-              type="button"
-              className="btn btn-light border border-secondary text-dark mb-3"
-              onClick={addQuestion}
-            >
-              <i className="bi bi-plus-circle me-2"></i> Add Question
-            </button>
-          </div>
-        </div>
+              {/* Render MCQ Options */}
+              {item.inputType === 'MCQ' && item.options.map((option, idx) => (
+                <div key={option.optionId} className="input-group mb-2">
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={option.optionText}
+                    onChange={(e) =>
+                      setQuestions((prev) =>
+                        prev.map((i) =>
+                          i.questionId === item.questionId
+                            ? {
+                                ...i,
+                                options: i.options.map((opt) =>
+                                  opt.optionId === option.optionId
+                                    ? { ...opt, optionText: e.target.value }
+                                    : opt
+                                ),
+                              }
+                            : i
+                        )
+                      )
+                    }
+                    placeholder={`Option ${idx + 1}`}
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-danger ms-2"
+                    onClick={() => removeOption(item.questionId, option.optionId)}
+                  >
+                    <i className="bi bi-x-circle-fill"></i>
+                  </button>
+                </div>
+              ))}
 
-        {/* Submit Button */}
-        <div className="d-flex justify-content-end mb-3">
-          <button type="submit" className="btn btn-success">
-            Submit
-          </button>
-        </div>
-      </form>
+              {/* Add Option Button */}
+              {item.inputType === 'MCQ' && item.options.length < 8 && (
+                <div className="d-flex justify-content-end mt-2">
+                  <button
+                    type="button"
+                    className="btn btn-light border border-secondary text-dark mb-2"
+                    onClick={() => addOption(item.questionId)}
+                  >
+                    <i className="bi bi-plus-circle me-2"></i> Add Option
+                  </button>
+                </div>
+              )}
+
+              {/* Render Sections */}
+              {item.sections.map((section) => (
+                <div key={section.sectionId} className="flex-grow-1 p-3 bg-white border rounded shadow-sm mt-4">
+                  <div className="d-flex justify-content-between">
+                    <div className="w-100">
+                      <h5>{section.sectionTitle}</h5>
+                      {section.inputFields.map((field) => (
+                        <div key={field.fieldId} className="mb-3">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder={`Field ${field.fieldId}`}
+                            value={field.fieldText}
+                            onChange={(e) =>
+                              setQuestions((prev) =>
+                                prev.map((q) =>
+                                  q.questionId === item.questionId
+                                    ? {
+                                        ...q,
+                                        sections: q.sections.map((sec) =>
+                                          sec.sectionId === section.sectionId
+                                            ? {
+                                                ...sec,
+                                                inputFields: sec.inputFields.map((fld) =>
+                                                  fld.fieldId === field.fieldId
+                                                    ? { ...fld, fieldText: e.target.value }
+                                                    : fld
+                                                ),
+                                              }
+                                            : sec
+                                        ),
+                                      }
+                                    : q
+                                )
+                              )
+                            }
+                            required
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Add Input Field Button */}
+                    <div className="d-flex flex-column align-items-center ms-3" style={{ width: '40px' }}>
+                      <button
+                        type="button"
+                        className="btn btn-light mb-2"
+                        onClick={() => addInputFieldInSection(section.sectionId, item.questionId)}
+                        title="Add Input Field"
+                      >
+                        <i className="bi bi-plus-circle-fill"></i>
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-light mb-2"
+                        onClick={() => deleteSection(section.sectionId, item.questionId)}
+                        title="Delete Section"
+                      >
+                        <i className="bi bi-trash-fill"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {/* Add Section Button */}
+              <div className="d-flex justify-content-end mt-4">
+                <button
+                  type="button"
+                  className="btn btn-light border border-secondary text-dark mb-2"
+                  onClick={() => addSection(item.questionId)}
+                >
+                  Add Section
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Add Question Button */}
+      <div className="col-md-4 d-flex flex-column align-items-center justify-content-center">
+        <button
+          type="button"
+          className="btn btn-light border border-secondary text-dark mb-3"
+          onClick={addQuestion}
+        >
+          <i className="bi bi-plus-circle me-2"></i> Add Question
+        </button>
+      </div>
     </div>
+
+    {/* Submit Button */}
+    <div className="d-flex justify-content-end mb-3">
+      <button type="submit" className="btn btn-success">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+
   );
 };
 
