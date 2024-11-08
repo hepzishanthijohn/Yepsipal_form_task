@@ -25,7 +25,7 @@ const Navbar = ({ onPreviewToggle }) => {
           <ul className="navbar-nav ms-auto">
             {/* Question Link */}
             <li className="nav-item mx-4">
-              <Link className="nav-link text-white" to="/question">
+              <Link className="nav-link text-white" to="/">
                 Question
               </Link>
             </li>

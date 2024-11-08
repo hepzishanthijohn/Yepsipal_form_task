@@ -67,7 +67,7 @@ const App = () => {
         <Routes>
           {/* Route for the Question Form */}
           <Route
-            path="/question"
+            path="/"
             element={
               <QuestionForm
                 formTitle={formTitle}
