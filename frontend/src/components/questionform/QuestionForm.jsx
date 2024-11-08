@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap is imported
+
 
 const QuestionForm = ({ isPreviewMode }) => {
   const [formTitle, setFormTitle] = useState('Untitled Form');
