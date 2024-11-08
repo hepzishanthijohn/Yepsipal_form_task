@@ -1,0 +1,37 @@
+/* src/index.css */
+
+/* Apply the Roboto font globally */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Apply global box-sizing model and reset margin/padding */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif; 
+ 
+ 
+}
+/* Set the background color for the entire page (light white background) */
+body {
+   /* Light grayish white */
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+   
+}
+
+/* Style for the form container or content area */
+
+/* Optional: Add some padding to the form elements */
+
+/* Additional styles to enhance form elements */
+input, select, textarea, button {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Optional: Styling for individual form elements */
+input[type="text"], input[type="email"], textarea {
+  background-color: #f4f4f4; /* Slightly darker white for form fields */
+  border: 1px solid #ddd; /* Light border for input fields */
+}
+

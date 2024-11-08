@@ -1,0 +1,16 @@
+/* main-container.css or styles.css */
+.main-container {
+    display: flex;
+    
+    flex-direction: column;
+    min-height: 100vh;  /* Ensures the container takes up the full height */
+    background-color: #f4f6f9;
+}
+
+.question-container {
+    flex: 1;  /* Ensures the content section takes up remaining space */
+    padding-top: 140px;  /* Add a little space from the Navbar */
+}
+
+
+  
