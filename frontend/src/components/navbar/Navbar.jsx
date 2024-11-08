@@ -32,7 +32,7 @@ const Navbar = ({ onPreviewToggle }) => {
             
             {/* Preview Link */}
             <li className="nav-item mx-4">
-              <button className="nav-link text-white" onClick={onPreviewToggle}>
+              <button className="nav-link text-dark" onClick={onPreviewToggle}>
                 Toggle Preview
               </button>
             </li>
